@@ -1,0 +1,193 @@
+<template>
+	<div class="orginazation">
+		<div class="org-wrapper">      	
+			<div class="img-wrapper">
+				<img src="./user1.jpg">
+			</div>
+			<p class="org-bulletin">计算机学院15级计科三班</p>
+			<div>
+			<router-link to="/orginaztion/bulletins">
+				<buttonBulletin></buttonBulletin>
+				<span class="icon-text">公告</span>
+			</router-link>
+			<router-link to="/orginaztion/members">
+				<buttonMembers></buttonMembers>
+				<span class="icon-text">成员</span>
+			</router-link>
+			<router-link to="/orginaztion/location">
+				<buttonLocation></buttonLocation>
+				<span class="icon-text">位置</span>
+			</router-link>
+			</div>
+		</div>
+		<div class="bulletin-wrapper">
+			<transition name="fade">
+				<router-view></router-view>
+			</transition>
+		</div>
+		<div class="login-wrapper" v-show="loginShow" v-on:click="closeLogin">
+		<div class="login" v-on:click.stop>
+			<form method="post" id="build">
+				<span>组织名</span>
+				<input type="text" name="org-name" class="org-name"></input><br>
+				<span>真实姓名</span>
+				<input type="text" name="manager" class="manager"></input>
+				<input type="submit" class="submit" value="新建组织">
+			</form>
+		</div>
+		</div>
+		<div class="buttonControl-wrapper" v-on:click="showLogin"  id="add-button">
+			<img src="./add.png">
+		</div>
+	</div>
+</template>
+
+<script>
+	import bulletins from '../orginazation/bulletins/bulletins.vue';
+	import buttonBulletin from '../buttonControl/buttonBulletin.vue';
+	import buttonControl from '../buttonControl/buttonControl.vue';
+	import buttonLocation from '../buttonControl/buttonLocation.vue';
+	import buttonMembers from '../buttonControl/buttonMembers.vue';
+
+	export default {
+		components:{
+			"buttonControl":buttonControl,
+			"buttonLocation":buttonLocation,
+			"buttonMembers":buttonMembers,
+			"buttonBulletin":buttonBulletin
+		},
+		data() {
+			return {
+				loginShow:false
+			}
+		},
+		methods:{
+			showLogin:function(){
+				this.loginShow=true;
+			},
+			closeLogin:function(){
+				this.loginShow=false;
+			}
+		}
+	};
+</script>
+
+<style>
+	body{
+		overflow: hidden;
+	}
+	a{
+		text-decoration: none;
+	}
+	.orginazation{
+		display: flex;
+		display: -webkit-flex;
+		flex-direction:column;
+		height: 100%;
+		width: 100%;
+		padding-bottom: 20px;
+	}
+	.org-wrapper{
+		position: relative;
+		text-align: center;
+		background: #d9dde1;
+		width: 100%;
+	}
+	.img-wrapper{
+		display: inline-block;
+		margin: 20px auto;
+		width:100px;
+		height: 100px;
+		border-radius: 50%;
+		background: #fff;
+	}
+	.img-wrapper img{
+		width: 100%;
+		height: 100%;
+		border-radius: 50%;
+	}
+	.bulletin-wrapper{
+		background: #fff;
+		overflow-y: scroll;
+		height: 350px;
+	}
+	.buttonControl-wrapper{
+		position: fixed;
+		z-index: 200;
+		right: 10px;
+		bottom: 40px;
+	}
+	.login{
+		z-index: 50;
+		text-align: center;
+		background: rgba(7,17,27,0.8);
+		blur:10px;
+		bottom: 200px;
+		height: 200px;
+		margin: 50% 20px 0 20px;
+		color: #fff;
+		border-radius: 10px;
+		animation: myfirst 0.5s;
+    	-webkit-animation: myfirst 0.5s;
+	}
+	@keyframes myfirst
+	{
+	10% {opacity: 0.1; margin-top: 10%;}
+	30%   {opacity: 0.2; margin-top: 20%;}
+	50%   {opacity: 0.2; margin-top: 35%;}
+	70% {opacity: 0.5; margin-top: 40%;}
+	100%{opacity: 1;  margin-top: 50%;}
+	}
+	@-webkit-keyframes myfirst /* Safari 与 Chrome */
+	{
+	10% {opacity: 0.1; margin-top: 10%;}
+	30%   {opacity: 0.2; margin-top: 20%;}
+	50%   {opacity: 0.3; margin-top: 35%;}
+	70% {opacity: 0.5; margin-top: 40%;}
+	100%{opacity: 1;  margin-top: 50%;}
+	}
+	.login-wrapper{
+		position: absolute;
+		width: 100%;
+		height: 90%;
+		background: rgba(7,17,27,0.8);
+		blur:10px; 
+	}
+	.org-name{
+		margin: 60px auto 5px auto;
+		width: 50%;
+		line-height:20px;
+	}
+	.submit{
+		margin: 20px auto;
+		display: block;
+		width: 80%;
+		border-radius: 5px;
+		line-height:30px;
+		background-color: rgb(0,160,220);
+		color: rgba(255,255,255,0.8);
+		font-weight: 500;
+	}
+	.manager{
+		width: 50%;
+		margin:20px auto 5px auto;
+		line-height:20px;
+	}
+	.icon-add_circle{
+		color: rgb(0,160,220);
+	}
+	.icon-location{
+		color:rgb(240,20,20);
+	}
+	.icon-text{
+		font-size: 15px;
+		width: 15px;
+		font-weight:600;
+	}
+	.fade-enter-active, .fade-leave-active {
+  		transition: opacity .5s
+	}
+	.fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
+  		opacity: 0
+	}
+</style>
