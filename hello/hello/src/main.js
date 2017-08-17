@@ -7,12 +7,22 @@ import VueResource from 'vue-resource';
 import login from './components/login/login.vue';
 import home from './components/home/home.vue';
 import orginazation from './components/orginazation/orginazation.vue';
+import manager from './components/manager/manager.vue';
 import information from './components/information/information.vue';
 import bulletins from './components/orginazation/bulletins/bulletins.vue';
 import location from './components/orginazation/location/location.vue';
 import members from './components/orginazation/members/members.vue';
+import userManager from './components/manager/userManager/userManager.vue';
+import setLocation from './components/manager/setLocation/setLocation.vue';
+import search from './components/manager/search/search.vue';
+import addBulletins from './components/manager/addBulletins/addBulletins.vue';
 import VueCordova from 'vue-cordova';
 import VueAMap from 'vue-amap';
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-default/index.css'
+Vue.use(ElementUI);
+
+
 
 Vue.use(VueAMap);
 VueAMap.initAMapApiLoader({
@@ -32,7 +42,7 @@ Vue.use(VueResource);
 
 
 const routes = [
-{path:"/", component: login},
+{path:"/login", component: login},
 {path: '/home', component: home},
 {path: '/orginazation', component: orginazation,
 	children:[{
@@ -43,6 +53,23 @@ const routes = [
   },
   {
     path:"/orginaztion/members", component: members
+  },
+  {
+    path:"", component: location
+  }
+  ]},
+{path:"/manager", component: manager,
+  children:[{
+    path:"/manager/userManager", component: userManager
+  },
+  {
+    path:"/manager/search", component: search
+  },
+  {
+    path:"/manager/setLocation", component: setLocation
+  },
+  {
+    path:"/manager/addBulletins", component: addBulletins
   }
   ]},
 {path: '/information', component: information}

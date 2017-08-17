@@ -1,21 +1,22 @@
 <template>
 	<div class="orginazation">
-		<div class="org-wrapper">      	
+		<div class="org-wrapper">
+			<img src="./change.png" v-on:click="changeOrg" class="change-org">      	
 			<div class="img-wrapper">
 				<img src="./user1.jpg">
 			</div>
-			<p class="org-bulletin">计算机学院15级计科三班</p>
+			<p class="org-bulletin">15级计科三班</p>
 			<div>
-			<router-link to="/orginaztion/bulletins">
-				<buttonBulletin></buttonBulletin>
+			<router-link :to="{path:'/orginaztion/bulletins',query:{currentOrg:currentOrg}}">
+				<img src="./bulletins.png">
 				<span class="icon-text">公告</span>
 			</router-link>
-			<router-link to="/orginaztion/members">
-				<buttonMembers></buttonMembers>
+			<router-link :to="{path:'/orginaztion/members',query:{currentOrg:currentOrg}}">
+				<img src="./members.png">
 				<span class="icon-text">成员</span>
 			</router-link>
-			<router-link to="/orginaztion/location">
-				<buttonLocation></buttonLocation>
+			<router-link :to="{path:'/orginaztion/location',query:{currentOrg:currentOrg}}">
+				<img src="./location.png">
 				<span class="icon-text">位置</span>
 			</router-link>
 			</div>
@@ -25,8 +26,8 @@
 				<router-view></router-view>
 			</transition>
 		</div>
-		<div class="login-wrapper" v-show="loginShow" v-on:click="closeLogin">
-		<div class="login" v-on:click.stop>
+		<div class="build-wrapper" v-show="loginShow" v-on:click="closeLogin">
+		<div class="build" v-on:click.stop>
 			<form method="post" id="build">
 				<span>组织名</span>
 				<input type="text" name="org-name" class="org-name"></input><br>
@@ -36,30 +37,24 @@
 			</form>
 		</div>
 		</div>
-		<div class="buttonControl-wrapper" v-on:click="showLogin"  id="add-button">
-			<img src="./add.png">
-		</div>
+		<div class="buttonControl-wrapper"   id="add-button">
+			<img src="./add.png" v-on:click="showLogin" >
+		</div>		
 	</div>
 </template>
 
 <script>
-	import bulletins from '../orginazation/bulletins/bulletins.vue';
-	import buttonBulletin from '../buttonControl/buttonBulletin.vue';
-	import buttonControl from '../buttonControl/buttonControl.vue';
-	import buttonLocation from '../buttonControl/buttonLocation.vue';
-	import buttonMembers from '../buttonControl/buttonMembers.vue';
+	
 
 	export default {
-		components:{
-			"buttonControl":buttonControl,
-			"buttonLocation":buttonLocation,
-			"buttonMembers":buttonMembers,
-			"buttonBulletin":buttonBulletin
-		},
+		
 		data() {
 			return {
-				loginShow:false
-			}
+				loginShow:false,
+				currentOrg:"1",
+				num:3,
+				fullscreen:false
+				}  
 		},
 		methods:{
 			showLogin:function(){
@@ -67,12 +62,24 @@
 			},
 			closeLogin:function(){
 				this.loginShow=false;
-			}
+			},
+      		changeOrg:function(){
+        		if(this.currentOrg===3){
+        			this.currentOrg%=3;
+        		}
+        		this.currentOrg++;       		
+        		this.$router.push({path:"/orginaztion/bulletins",query:{ currentOrg: this.currentOrg}});
+        		this.fullscreen=true;
+        		var vm=this;
+        		setTimeout(function(){
+          		vm.fullscreen = false;
+        		}, 1000);
+      		}
 		}
 	};
 </script>
 
-<style>
+<style scoped>
 	body{
 		overflow: hidden;
 	}
@@ -90,7 +97,9 @@
 	.org-wrapper{
 		position: relative;
 		text-align: center;
-		background: #d9dde1;
+		padding-bottom: 20px;
+		background: #fff;
+		box-shadow: 0px 2px 8px rgba(0,0,0,0.4);
 		width: 100%;
 	}
 	.img-wrapper{
@@ -109,47 +118,46 @@
 	.bulletin-wrapper{
 		background: #fff;
 		overflow-y: scroll;
-		height: 350px;
+		height: 450px;
 	}
 	.buttonControl-wrapper{
 		position: fixed;
 		z-index: 200;
-		right: 10px;
-		bottom: 40px;
+		right: 20px;
+		bottom: 60px;
 	}
-	.login{
+	.build{
 		z-index: 50;
 		text-align: center;
-		background: rgba(7,17,27,0.8);
+		background: #fff;
 		blur:10px;
 		bottom: 200px;
 		height: 200px;
-		margin: 50% 20px 0 20px;
-		color: #fff;
+		margin: 200px 20% 0 20%;
 		border-radius: 10px;
 		animation: myfirst 0.5s;
     	-webkit-animation: myfirst 0.5s;
 	}
 	@keyframes myfirst
 	{
-	10% {opacity: 0.1; margin-top: 10%;}
-	30%   {opacity: 0.2; margin-top: 20%;}
-	50%   {opacity: 0.2; margin-top: 35%;}
-	70% {opacity: 0.5; margin-top: 40%;}
-	100%{opacity: 1;  margin-top: 50%;}
+	10% {opacity: 0.1; margin-top: 20px;}
+	30%   {opacity: 0.2; margin-top: 60px;}
+	50%   {opacity: 0.2; margin-top: 100px;}
+	70% {opacity: 0.5; margin-top: 140px;}
+	100%{opacity: 1;  margin-top: 200px;}
 	}
 	@-webkit-keyframes myfirst /* Safari 与 Chrome */
 	{
-	10% {opacity: 0.1; margin-top: 10%;}
-	30%   {opacity: 0.2; margin-top: 20%;}
-	50%   {opacity: 0.3; margin-top: 35%;}
-	70% {opacity: 0.5; margin-top: 40%;}
-	100%{opacity: 1;  margin-top: 50%;}
+	10% {opacity: 0.1; margin-top: 20px;}
+	30%   {opacity: 0.2; margin-top: 60px;}
+	50%   {opacity: 0.3; margin-top: 100px;}
+	70% {opacity: 0.5; margin-top: 140px;}
+	100%{opacity: 1;  margin-top: 200px;}
 	}
-	.login-wrapper{
+	.build-wrapper{
 		position: absolute;
 		width: 100%;
-		height: 90%;
+		height: 100%;
 		background: rgba(7,17,27,0.8);
 		blur:10px; 
 	}
@@ -157,6 +165,7 @@
 		margin: 60px auto 5px auto;
 		width: 50%;
 		line-height:20px;
+		border: 1px solid rgba(7,17,27,0.2);
 	}
 	.submit{
 		margin: 20px auto;
@@ -172,6 +181,7 @@
 		width: 50%;
 		margin:20px auto 5px auto;
 		line-height:20px;
+		border: 1px solid rgba(7,17,27,0.2);
 	}
 	.icon-add_circle{
 		color: rgb(0,160,220);
@@ -189,5 +199,11 @@
 	}
 	.fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
   		opacity: 0
+	}
+	.change-org{
+		position: absolute;
+		top: 20px;
+		right: 20px;
+
 	}
 </style>

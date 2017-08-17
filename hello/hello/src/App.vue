@@ -13,6 +13,11 @@
         </router-link>
       </div>
       <div class="tab-item">
+        <router-link to="/manager">
+        <img src="./reportmanager.png">
+        </router-link>
+      </div>
+      <div class="tab-item">
         <router-link to="/information">
         <img src="./account.png">
         </router-link>
@@ -23,55 +28,50 @@
 
 <script>
 export default {
-  created:function(){
-   /*navigator.geolocation.getCurrentPosition(function(position){
-    alert('Latitude: '          + position.coords.latitude          + '\n' +
-         'Longitude: '         + position.coords.longitude         + '\n' +
-         'Altitude: '          + position.coords.altitude          + '\n' +
-         'Accuracy: '          + position.coords.accuracy          + '\n' +
-         'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
-         'Heading: '           + position.coords.heading           + '\n' +
-         'Speed: '             + position.coords.speed             + '\n' +
-         'Timestamp: '         + position.timestamp                + '\n');
-   }, function(error){
-    alert('code: '    + error.code    + '\n' + 'message: ' + error.message + '\n');
-   },{
-      maximumAge: 3600000,
-      timeout: 30000,
-      enableHighAccuracy: true
-   });*/
-     
-     /*
-       .user-login{
-    position: absolute;
-    z-index: 1200;
-    width: 100%;
-    height: 100%;
-  }
-  .login-img{
-    position: absolute;
-    z-index: 1200;
-    width: 100%;
-    height: 100%;
-  }
-  <div class="user-login">
-    <img src="./login.jpg" class="login-img">
-  </div>
-     */ 
-  }
+    data(){
+      return {
+        
+      }
+    },
+    methods:{
+      checkLogin:function(){
+        if(!this.getSession("token")){
+          this.$router.push("/login");
+          console.log("token没了");   
+        }
 
+      },
+      getSession:function(session){
+        if(sessionStorage.getItem(session)){
+          return true;
+        }
+      }
+    },
+    created:function(){
+      this.checkLogin();
+    },
+    watch:{
+      "$route":"checkLogin"
+    },
+    mouted:function(){
+      this.checkLogin();     
+    }
 }
 </script>
 
 <style>
-  @import '/static/css/style.css';
   @import '/static/css/reset.css';
   body,html{
+  height: 100%;
   line-height:1;
   font-weight:200;
   font-family:"PingFang SC","STHeitiSC-Light","Helvetica-Light";
   }
-  
+  #app{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+  }
   #app .tab{
     position: fixed;
     left: 0;

@@ -1,11 +1,18 @@
 <template>
-	<div>个人信息内容</div>
+	<logout></logout>
 </template>
 
 <script>
-	export default {};
+import logout from"./logout/logout.vue"
+	export default {
+		
+  		components:{
+  			"logout":logout
+  		}
+  	};
+	
 </script>
 
-<style>
+<style scoped>
 
 </style>

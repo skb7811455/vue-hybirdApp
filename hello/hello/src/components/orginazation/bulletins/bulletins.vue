@@ -1,7 +1,7 @@
 <template>
-  <div ref="bulletinWrapper">
+  <div ref="bulletinWrapper" v-bind:bulletins="bulletins">
    	<ul class="bulletin-box">
-   		<li v-for="item in items">
+   		<li v-for="item in bulletins">
    			<div class="bulletin-item">
    				<div class="bulletin-content">
    					<p class="text">{{item.text}}</p>
@@ -19,83 +19,54 @@
   export default {
   	data:function(){
 
-	return{
-  		items:[
-  			{
-  				text:"今天在教四A201打卡,大家不要迟到,有老师来查人,记得带上作业啊啊啊啊",
-  				time:"2017.8.10"
-  			},
-  			{
-  				text:"今天在教四A201打卡",
-  				time:"2017.8.10"
-  			},
-  			{
-  				text:"今天在教四A201打卡",
-  				time:"2017.8.10"
-  			},
-  			{
-  				text:"今天在教四A201打卡",
-  				time:"2017.8.10"
-  			},
-  			{
-  				text:"今天在教四A201打卡",
-  				time:"2017.8.10"
-  			},
-  			{
-  				text:"今天在教四A201打卡",
-  				time:"2017.8.10"
-  			},
-  			{
-  				text:"今天在教四A201打卡",
-  				time:"2017.8.10"
-  			},
-        {
-          text:"今天在教四A201打卡",
-          time:"2017.8.10"
-        },
-        {
-          text:"今天在教四A201打卡",
-          time:"2017.8.10"
-        },
-        {
-          text:"今天在教四A201打卡",
-          time:"2017.8.10"
-        },
-        {
-          text:"今天在教四A201打卡",
-          time:"2017.8.10"
-        },
-        {
-          text:"今天在教四A201打卡",
-          time:"2017.8.10"
-        },
-        {
-          text:"今天在教四A201打卡",
-          time:"2017.8.10"
-        },
-        {
-          text:"今天在教四A201打卡",
-          time:"2017.8.10"
-        },
-        {
-          text:"今天在教四A201打卡",
-          time:"2017.8.10"
+	   return{
+  	       bulletins:[]
         }
-  		]
-  	}
-  }
+    },
+    created(){
+      this.getBulletin();
+    },
+    watch:{
+      "$route":["getBulletin"]
+    },
+    methods:{
+      getBulletin:function(){
+        this.$http.get("http://localhost:3000/api.json",{
+          params:{
+            currentOrg:this.$route.query.currentOrg
+          }
+        }).then(function(res){
+          var num=res.data.orginazations.length;
+          
+          for(var i=0;i<num;i++){
+            if(this.$route.query.currentOrg==res.data.orginazations[i].id){
+              this.bulletins=res.data["orginazations"][i].items;
+              console.log(1);
+            }
+          }
+          
+          console.log(this.bulletins);
+        },function(err){
+            console.log(err);
+        });
+      }
+    }
+
   };
 </script>
 
-<style>
+<style scoped>
 	.bulletin-box{
-		margin: 0 20px;
-
+    padding: 20px 20px;
+    background-color: rgba(0,0,0,0.05);
 	}
 	.bulletin-item{
+    margin: 20px 10px;
 		padding: 20px 10px;
-		border-bottom: 1px solid rgb(217,221,225);
+		background: #fff;
     font-size: 0.8em;
+    border-radius: 20px;
+    box-shadow: 0 5px 5px rgba(0,0,0,0.05);
 	}
   .bulletin-time{
     display: block;
