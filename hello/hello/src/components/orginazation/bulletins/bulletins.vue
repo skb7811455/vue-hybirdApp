@@ -45,7 +45,7 @@
             }
           }
           
-          console.log(this.bulletins);
+          console.log(this.orgInfor);
         },function(err){
             console.log(err);
         });

@@ -26,6 +26,7 @@
 	}
 	.home img{
 		width: 200px;
-		border-radius: 50%;		
+		border-radius: 50%;	
+		
 	}
 </style>

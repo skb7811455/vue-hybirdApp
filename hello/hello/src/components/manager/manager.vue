@@ -52,7 +52,7 @@
 		height: 80px;
 		text-align: center;
 		box-shadow: 0px 2px 8px rgba(0,0,0,0.4);
-		background: #99A9BF;
+		background: #D3DCE6;
 	}
 	.manager-menu a{
 
@@ -63,7 +63,8 @@
 	}
 	.manager-wrapper{
 		margin: 80px 0 0 0;
-		
+		overflow-y:scroll;
+		overflow-x:hidden;
 		height: 80%;		
 	}
 

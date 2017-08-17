@@ -21,8 +21,6 @@
   		this.init();
   	},
   	methods:{
-  		
-
             vm.lng=result.position;
             vm.lat=result.position;
 
@@ -35,8 +33,7 @@
 				});
 			   
   		},
-      getMarkPosition:function(e){
-        
+      getMarkPosition:function(e){      
         this.markerLng=e.lnglat.getLng();
         this.markerLat=e.lnglat.getLat();
         console.log(this.markerLng+","+this.markerLat);

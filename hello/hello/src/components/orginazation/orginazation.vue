@@ -23,7 +23,7 @@
 		</div>
 		<div class="bulletin-wrapper">
 			<transition name="fade">
-				<router-view></router-view>
+				<router-view v-bind:orgInfor="orgInfor"></router-view>
 			</transition>
 		</div>
 		<div class="build-wrapper" v-show="loginShow" v-on:click="closeLogin">
@@ -53,7 +53,8 @@
 				loginShow:false,
 				currentOrg:"1",
 				num:3,
-				fullscreen:false
+				fullscreen:false,
+				orgInfor:222
 				}  
 		},
 		methods:{
